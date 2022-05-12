@@ -17,7 +17,8 @@ Insufficient number of classes: ***D***. Cora    ***E***. CiteSeer, ***F***. Coa
 |MetaTNE|[[NuerIPS 2020] Node Classification on Graphs with Few-Shot Novel Labels via Meta Transformed Network Embedding](https://arxiv.org/pdf/2007.02914.pdf)|[PyTorch](https://github.com/llan-ml/MetaTNE)
 |RALE|[[AAAI 2021] Relative and Absolute Location Embedding for Few-Shot Node Classification on Graph](https://fangyuan1st.github.io/paper/AAAI21_RALE.pdf)|[TensorFlow](https://github.com/shuaiOKshuai/RALE)
 
-### Contrastive learning on a single graph [PyGCL](https://github.com/PyGCL/PyGCL)
+### Contrastive learning on a single graph 
+[PyGCL](https://github.com/PyGCL/PyGCL)
 |Name|Paper|Code
 |---|---|---|
 |DGI|[[ICLR 2019] Deep Graph Infomax](https://arxiv.org/pdf/1809.10341.pdf)| [PyTorch](https://github.com/PetarV-/DGI)
