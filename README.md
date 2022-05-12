@@ -33,3 +33,10 @@ Insufficient number of classes: ***D***. Cora    ***E***. CiteSeer, ***F***. Coa
 |---|---|---|
 |GFL|[[AAAI 2020] Graph Few-shot Learning via Knowledge Transfer](https://arxiv.org/pdf/1910.03053.pdf)|[N/A]
 |G-Meta|[[NeurIPS 2020] Graph Meta Learning via Local Subgraphs](https://arxiv.org/pdf/2006.07889.pdf)|[PyTorch](https://github.com/mims-harvard/G-Meta)
+
+## Settings
+### Supervised Few-shot Node Classification
+1. Supervised Few-shot Node Classification with Sufficient Number of Classes[ABC]
+2. Supervised Few-shot Node Classification with Limited Number of Classes [DEF]
+### Weakly-Supervised Few-shot Node Classification with Limited Number of Classes [ABC]
+### Self-Supervised Few-shot Node Classification with Limited Number of Classes [ABC]
