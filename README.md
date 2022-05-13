@@ -26,7 +26,7 @@ Insufficient number of classes: ***D***. Cora    ***E***. CiteSeer, ***F***. Coa
 |MVGRL|[[ICML 2020] Contrastive Multi-View Representation Learning on Graphs](https://arxiv.org/pdf/2006.05582.pdf)|[PyTorch](https://github.com/kavehhassani/mvgrl)
 |GRACE|[[ICML 2020 Workshop] Deep Graph Contrastive Representation Learning](https://arxiv.org/pdf/2006.04131.pdf)|[PyTorch](https://github.com/CRIPAC-DIG/GRACE)
 |GraphCL|[[NeurIPS 2020] Graph Contrastive Learning with Augmentations](https://arxiv.org/pdf/2010.13902.pdf)|[PyTorch](https://github.com/Shen-Lab/GraphCL)
-|BGRL|[[ICLR 2021 workshop] Bootstrapped Representation Learning on Graphs](https://openreview.net/pdf?id=QrzVRAA49Ud)|[PyTorch_v1](https://github.com/PyGCL/PyGCL/blob/main/examples/BGRL_L2L.py) [PyTorch_v2](https://github.com/PyGCL/PyGCL/blob/main/examples/BGRL_G2L.py)
+|BGRL|[[ICLR 2022] LARGE-SCALE REPRESENTATION LEARNING ON GRAPHS VIA BOOTSTRAPPING](https://arxiv.org/pdf/2102.06514.pdf)|[PyTorch_v1](https://github.com/PyGCL/PyGCL/blob/main/examples/BGRL_L2L.py) [PyTorch_v2](https://github.com/PyGCL/PyGCL/blob/main/examples/BGRL_G2L.py)
 
 ### Meta-learning on different graphs
 |Name|Paper|Code
