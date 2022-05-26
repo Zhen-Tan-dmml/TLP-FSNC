@@ -3,9 +3,9 @@
 ## Dataset 
 [[Pytorch Link]](https://pytorch-geometric.readthedocs.io/en/latest/modules/datasets.html)
 
-Sufficient number of classes: ***A***. CoraFull    ***B***. Reddit    ***C***. Ogbn-Arxiv    
+Sufficient number of classes: ***A***. CoraFull    ***B***. Coauthor-CS    ***C***. Ogbn-Arxiv    
 
-Insufficient number of classes: ***D***. Cora    ***E***. CiteSeer, ***F***. Coauthor-CS
+Insufficient number of classes: ***D***. Cora    ***E***. CiteSeer, ***F***. Amazon-Computer
 
 ## Methods
 ### Meta-learning on a single graph
