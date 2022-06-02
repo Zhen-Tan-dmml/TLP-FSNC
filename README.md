@@ -37,9 +37,11 @@ Insufficient number of classes: ***D***. Cora    ***E***. CiteSeer, ***F***. Ama
 
 ## Settings
 ### Supervised Few-shot Node Classification
-1. Sufficient Number of Classes [ABC]
+[ABC]
+ 
+### Weakly-Supervised Few-shot Node Classification
+1. Sufficient Number of Classes but with limited number of nodes in each class [ABC]
+
 2. Limited Number of Classes [DEF]
-### Weakly-Supervised Few-shot Node Classification with Limited Number of Classes 
-[ABC]
-### Self-Supervised Few-shot Node Classification with Limited Number of Classes 
-[ABC]
+### Self-Supervised Few-shot Node Classification
+[ABCDEF]
