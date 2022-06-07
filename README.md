@@ -24,8 +24,8 @@ Insufficient number of classes: ***D***. Cora    ***E***. CiteSeer, ***F***. Ama
 |DGI|[[ICLR 2019] Deep Graph Infomax](https://arxiv.org/pdf/1809.10341.pdf)| [PyTorch](https://github.com/PetarV-/DGI)
 |InfoGraph (remove)|[[ICLR 2020] InfoGraph: Unsupervised and Semi-supervised Graph-Level Representation Learning via Mutual Information Maximization](https://arxiv.org/pdf/1908.01000.pdf)| [PyTorch](https://github.com/hengruizhang98/InfoGraph)
 |MVGRL|[[ICML 2020] Contrastive Multi-View Representation Learning on Graphs](https://arxiv.org/pdf/2006.05582.pdf)|[PyTorch](https://github.com/kavehhassani/mvgrl)
-|GRACE (remove)|[[ICML 2020 Workshop] Deep Graph Contrastive Representation Learning](https://arxiv.org/pdf/2006.04131.pdf)|[PyTorch](https://github.com/CRIPAC-DIG/GRACE)
-|Subg-Con|[[ICDM 2020] Sub-graph Contrast for Scalable Self-Supervised Graph Representation Learning](https://arxiv.org/pdf/2006.04131.pdf)|[PyTorch](https://github.com/yzjiao/Subg-Con)
+|GRACE|[[ICML 2020 Workshop] Deep Graph Contrastive Representation Learning](https://arxiv.org/pdf/2006.04131.pdf)|[PyTorch](https://github.com/CRIPAC-DIG/GRACE)
+|Subg-Con (remove)|[[ICDM 2020] Sub-graph Contrast for Scalable Self-Supervised Graph Representation Learning](https://arxiv.org/pdf/2006.04131.pdf)|[PyTorch](https://github.com/yzjiao/Subg-Con)
 |GraphCL|[[NeurIPS 2020] Graph Contrastive Learning with Augmentations](https://arxiv.org/pdf/2010.13902.pdf)|[PyTorch](https://github.com/Shen-Lab/GraphCL)
 |BGRL|[[ICLR 2022] LARGE-SCALE REPRESENTATION LEARNING ON GRAPHS VIA BOOTSTRAPPING](https://arxiv.org/pdf/2102.06514.pdf)|[PyTorch_v1](https://github.com/PyGCL/PyGCL/blob/main/examples/BGRL_L2L.py) [PyTorch_v2](https://github.com/PyGCL/PyGCL/blob/main/examples/BGRL_G2L.py)
 
