@@ -26,8 +26,9 @@ Insufficient number of classes: ***D***. Cora    ***E***. CiteSeer, ***F***. Ama
 |Subg-Con|[[ICDM 2020] Sub-graph Contrast for Scalable Self-Supervised Graph Representation Learning](https://arxiv.org/pdf/2006.04131.pdf)|[PyTorch](https://github.com/yzjiao/Subg-Con)
 |GraphCL|[[NeurIPS 2020] Graph Contrastive Learning with Augmentations](https://arxiv.org/pdf/2010.13902.pdf)|[PyTorch](https://github.com/Shen-Lab/GraphCL)
 |BGRL|[[ICLR 2022] LARGE-SCALE REPRESENTATION LEARNING ON GRAPHS VIA BOOTSTRAPPING](https://arxiv.org/pdf/2102.06514.pdf)|[PyTorch](https://github.com/Namkyeong/BGRL_Pytorch)
-|AutoSSL|[[ICLR 2022] Simple Unsupervised Graph Representation Learning](https://www.aaai.org/AAAI22Papers/AAAI-3999.MoY.pdf)|[PyTorch](https://github.com/YujieMo/SUGRL)
-|SUGRL|[[AAAI 2022] Simple Unsupervised Graph Representation Learning](https://openreview.net/pdf?id=rFbR4Fv-D6-)|[PyTorch](https://github.com/ChandlerBang/AutoSSL)
+|MERIT|[[IJCAI 2021] Multi-Scale Contrastive Siamese Networks for Self-Supervised Graph
+Representation Learning](https://www.ijcai.org/proceedings/2021/0204.pdf)|[PyTorch](https://github.com/GRAND-Lab/MERIT)
+|SUGRL|[[AAAI 2022] Simple Unsupervised Graph Representation Learning](https://openreview.net/pdf?id=rFbR4Fv-D6-)|[PyTorch](https://github.com/YujieMo/SUGRL)
 
 ### Meta-learning with auxiliary graphs
 |Name|Paper|Code
