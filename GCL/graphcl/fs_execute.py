@@ -213,7 +213,8 @@ def fs_test(model, features, adj, sp_adj, labels, test_num, id_by_class, test_cl
 
     final_mean = np.mean(test_acc_all)
     final_std = np.std(test_acc_all)
-    return final_mean, final_std
+    final_interval = 1.96 * (final_std / np.sqrt(len(test_acc_all)))
+    return final_mean, final_std, final_interval
 
 if config["sup"] == "unsup":
     b_xent = nn.BCEWithLogitsLoss()
@@ -264,16 +265,17 @@ for epoch in range(config["epoch_num"]):
                    sparse, None, None, None, aug_type=aug_type)
         contrast_features = torch.cat([h0.unsqueeze(1), h2.unsqueeze(1)], dim=1)
         loss = supcon(contrast_features, contrast_labels)
-    print('Loss:[{:.4f}]'.format(loss.item()))
+    # print('Loss:[{:.4f}]'.format(loss.item()))
     loss.backward()
     optimiser.step()
 
     # validation
     if epoch % 10:
-        final_mean, final_std = fs_test(model, features, adj, sp_adj, labels, test_num, id_by_class, dev_class, n_way, k_shot, m_qry, sparse)
+        final_mean, final_std, final_interval = fs_test(model, features, adj, sp_adj, labels, test_num, id_by_class, dev_class, n_way, k_shot, m_qry, sparse)
         print("===="*20)
         print("novel_dev_acc: " + str(final_mean))
         print("novel_dev_std: " + str(final_std))
+        print("novel_dev_interval: " + str(final_interval))
         if best_acc < final_mean:
             best_acc = final_mean
             best_t = epoch
@@ -291,9 +293,10 @@ print('Loading {}th epoch'.format(best_t))
 model.load_state_dict(torch.load('model.pkl'))
 
 #final test
-final_mean, final_std = fs_test(model, features, adj, sp_adj, labels, test_num, id_by_class, test_class, n_way, k_shot, m_qry, sparse)
+final_mean, final_std, final_interval = fs_test(model, features, adj, sp_adj, labels, test_num, id_by_class, test_class, n_way, k_shot, m_qry, sparse)
 print("****"*20)
 print("novel_test_acc: " + str(final_mean))
 print("novel_test_std: " + str(final_std))
+print("novel_test_interval: " + str(final_interval))
 
 

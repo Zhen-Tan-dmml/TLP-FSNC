@@ -17,12 +17,12 @@ class_split = {
 
 config = {
     "seed": 1234,
-    "dataset": "Amazon-Computer", # CoraFull(70)/Coauthor-CS(15)/ogbn-arxiv(40)/Cora(7)/Amazon-Computer(10)/CiteSeer(6)
+    "dataset": "CiteSeer", # CoraFull(70)/Coauthor-CS(15)/ogbn-arxiv(40)/Cora(7)/Amazon-Computer(10)/CiteSeer(6)
     "batch_size": 128,
     "n_way": 2,
-    "k_shot": 1,
+    "k_shot": 5,
     "m_qry": 10,
-    "test_num": 20,
+    "test_num": 100,
     "patience": 10,
     "sup": "sup",
     "epoch_num": 10000,
