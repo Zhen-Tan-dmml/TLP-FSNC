@@ -30,10 +30,7 @@ Insufficient number of classes: ***D***. Cora    ***E***. CiteSeer, ***F***. Ama
 |BGRL|[[ICLR 2022] LARGE-SCALE REPRESENTATION LEARNING ON GRAPHS VIA BOOTSTRAPPING](https://arxiv.org/pdf/2102.06514.pdf)|[PyTorch](https://github.com/Namkyeong/BGRL_Pytorch)
 |SUGRL|[[AAAI 2022] Simple Unsupervised Graph Representation Learning](https://openreview.net/pdf?id=rFbR4Fv-D6-)|[PyTorch](https://github.com/YujieMo/SUGRL)
 
-### Meta-learning with auxiliary graphs
-|Name|Paper|Code
-|---|---|---|
-|GFL|[[AAAI 2020] Graph Few-shot Learning via Knowledge Transfer](https://arxiv.org/pdf/1910.03053.pdf)|[N/A]
+
 
 
 ## Settings
