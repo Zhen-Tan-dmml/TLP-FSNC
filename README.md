@@ -12,6 +12,7 @@ Insufficient number of classes: ***D***. Cora    ***E***. CiteSeer, ***F***. Ama
 |Name|Paper|Code
 |---|---|---|
 |MAML|[[ICML 2017] Model-agnostic Meta-learning for Fast Adaptation of Deep Networks](http://proceedings.mlr.press/v70/finn17a/finn17a.pdf)|[PyTorch](https://github.com/dragen1860/MAML-Pytorch)
+|ProtoNet|[[NeurIPS 2017] Prototypical Networks for Few-shot Learning](https://proceedings.neurips.cc/paper/2017/file/cb8da6767461f2812ae4290eac7cbc42-Paper.pdf)|[PyTorch]([https://github.com/dragen1860/MAML-Pytorch](https://github.com/sicara/easy-few-shot-learning))
 |Meta-GNN|[[CIKM 2019] Meta-GNN: On Few-shot Node Classification in Graph Meta-learning](https://arxiv.org/pdf/1905.09718.pdf)|[PyTorch](https://github.com/ChengtaiCao/Meta-GNN)
 |GPN|[[CIKM 2020] Graph Prototypical Networks for Few-shot Learning on Attributed Networks](https://arxiv.org/pdf/2006.12739.pdf)|[PyTorch](https://github.com/kaize0409/GPN_Graph-Few-shot)
 |AMM-GNN|[[CIKM 2020] Graph Few-shot Learning with Attribute Matching](http://www.public.asu.edu/~kding9/pdf/CIKM2020_AMM.pdf)|[N/A]
