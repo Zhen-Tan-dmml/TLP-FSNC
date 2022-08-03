@@ -27,7 +27,7 @@ Insufficient number of classes: ***D***. Cora    ***E***. CiteSeer, ***F***. Ama
 |FT-GNN|[[ECCV 2020] Rethinking few-shot image classification: a good embedding is all you need?](https://link.springer.com/chapter/10.1007/978-3-030-58568-6_16)|[PyTorch](https://github.com/WangYueFt/rfs)
 |MVGRL|[[ICML 2020] Contrastive Multi-View Representation Learning on Graphs](https://arxiv.org/pdf/2006.05582.pdf)|[PyTorch](https://github.com/kavehhassani/mvgrl)
 |GRACE|[[ICML 2020 Workshop] Deep Graph Contrastive Representation Learning](https://arxiv.org/pdf/2006.04131.pdf)|[PyTorch](https://github.com/CRIPAC-DIG/GRACE)
-|Subg-Con|[[ICDM 2020] Sub-graph Contrast for Scalable Self-Supervised Graph Representation Learning](https://arxiv.org/pdf/2006.04131.pdf)|[PyTorch](https://github.com/yzjiao/Subg-Con)
+|Subg-Con (removed)|[[ICDM 2020] Sub-graph Contrast for Scalable Self-Supervised Graph Representation Learning](https://arxiv.org/pdf/2006.04131.pdf)|[PyTorch](https://github.com/yzjiao/Subg-Con)
 |GraphCL|[[NeurIPS 2020] Graph Contrastive Learning with Augmentations](https://arxiv.org/pdf/2010.13902.pdf)|[PyTorch](https://github.com/Shen-Lab/GraphCL)
 |MERIT|[[IJCAI 2021] Multi-Scale Contrastive Siamese Networks for Self-Supervised Graph Representation Learning](https://www.ijcai.org/proceedings/2021/0204.pdf)|[PyTorch](https://github.com/GRAND-Lab/MERIT)
 |BGRL|[[ICLR 2022] LARGE-SCALE REPRESENTATION LEARNING ON GRAPHS VIA BOOTSTRAPPING](https://arxiv.org/pdf/2102.06514.pdf)|[PyTorch](https://github.com/Namkyeong/BGRL_Pytorch)
