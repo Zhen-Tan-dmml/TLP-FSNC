@@ -84,6 +84,10 @@ class SupConLoss(nn.Module):
 def relabeling(labels, train_class, dev_class, test_class, id_by_class):
     print("Start relabeling...")
     labels = labels.tolist()
+    train_class = train_class.tolist()
+    dev_class = dev_class.tolist()
+    test_class = test_class.tolist()
+
     contrast_labels = deepcopy(labels)
     masked_class = dev_class + test_class
     masked_idx = []
@@ -104,3 +108,17 @@ def relabeling(labels, train_class, dev_class, test_class, id_by_class):
                 tmp_class += 1
     print("Relabeling finished!")
     return contrast_labels
+
+def batch_relabeling(labels):
+    labels = labels.tolist()
+    tmp = 0
+    res = []
+    label_map = {}
+    for i in labels:
+        if i in label_map.keys():
+            res.append(label_map[i])
+        else:
+            label_map[i] = tmp
+            res.append(label_map[i])
+            tmp += 1
+    return res

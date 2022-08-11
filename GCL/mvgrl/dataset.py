@@ -20,7 +20,7 @@ def download(dataset):
     elif dataset == 'Reddit':
         return RedditDataset()
     elif dataset == 'ogbn-arxiv':
-        return DglNodePropPredDataset()
+        return DglNodePropPredDataset(name = "ogbn-arxiv", root='../dataset')
     elif dataset == 'Coauthor-CS':
         return CoauthorCSDataset()
     elif dataset == 'Amazon-Computer':

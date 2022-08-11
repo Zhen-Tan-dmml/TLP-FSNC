@@ -116,8 +116,15 @@ class Model(nn.Module):
         h_4 = self.gcn2(seq2, diff, sparse)
 
         ret = self.disc(c_1, c_2, h_1, h_2, h_3, h_4, samp_bias1, samp_bias2)
+        
+        # print(c_1.size())
+        # print(c_2.size())
+        # print(h_1.size())
+        # print(h_2.size())
+        # print(h_3.size())
+        # print(h_4.size())
 
-        return ret, h_1 + h_2, h_3 + h_4
+        return ret, nn.functional.normalize((c_1).squeeze()), nn.functional.normalize((c_2).squeeze())
 
     def embed(self, seq, adj, diff, sparse, msk):
         h_1 = self.gcn1(seq, adj, sparse)
@@ -167,9 +174,9 @@ def fs_test(model, features, adj, diff, labels, test_num, id_by_class, test_clas
     features = torch.FloatTensor(features[np.newaxis])
     adj = torch.FloatTensor(adj[np.newaxis])
     diff = torch.FloatTensor(diff[np.newaxis])
-    features = features.cuda()
-    adj = adj.cuda()
-    diff = diff.cuda()
+    # features = features.cuda()
+    # adj = adj.cuda()
+    # diff = diff.cuda()
 
     model.eval()
     embeds, _ = model.embed(features, adj, diff, sparse, None)
@@ -198,7 +205,8 @@ def fs_test(model, features, adj, diff, labels, test_num, id_by_class, test_clas
 
     final_mean = np.mean(test_acc_all)
     final_std = np.std(test_acc_all)
-    return final_mean, final_std
+    final_interval = 1.96 * (final_std / np.sqrt(len(test_acc_all)))
+    return final_mean, final_std, final_interval
 
 
 def train(dataset, verbose=False):
@@ -222,36 +230,36 @@ def train(dataset, verbose=False):
 
     labels = torch.LongTensor(labels)
 
-    if config["sup"] == "unsup":
-        lbl_1 = torch.ones(batch_size, sample_size * 2)
-        lbl_2 = torch.zeros(batch_size, sample_size * 2)
-        lbl = torch.cat((lbl_1, lbl_2), 1)
+    lbl_1 = torch.ones(batch_size, sample_size * 2)
+    lbl_2 = torch.zeros(batch_size, sample_size * 2)
+    lbl = torch.cat((lbl_1, lbl_2), 1)
 
     model = Model(ft_size, hid_units)
     optimiser = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=l2_coef)
 
-    if torch.cuda.is_available():
-        model.cuda()
-        labels = labels.cuda()
-        if config["sup"] == "unsup":
-            lbl = lbl.cuda()
+    # if torch.cuda.is_available():
+    #     model.cuda()
+    #     labels = labels.cuda()
+    #     if config["sup"] == "unsup":
+    #         lbl = lbl.cuda()
 
     if config["sup"] == "unsup":
         b_xent = nn.BCEWithLogitsLoss()
     elif config["sup"] == "sup":
         contrast_labels = relabeling(labels, train_class, dev_class, test_class, id_by_class)
         contrast_labels = torch.LongTensor(contrast_labels)
-        contrast_labels = contrast_labels.cuda()
+        # contrast_labels = contrast_labels.cuda()
         supcon = SupConLoss()
+        b_xent = nn.BCEWithLogitsLoss()
     
     cnt_wait = 0
     best_acc = 0
-    best_std = 0
     best_t = 0
 
     for epoch in range(nb_epochs):
 
         idx = np.random.randint(0, adj.shape[-1] - sample_size + 1, batch_size)
+        contrast_labels_batch = contrast_labels[idx]
         ba, bd, bf = [], [], []
         for i in idx:
             ba.append(adj[i: i + sample_size, i: i + sample_size])
@@ -273,11 +281,11 @@ def train(dataset, verbose=False):
         idx = np.random.permutation(sample_size)
         shuf_fts = bf[:, idx, :]
 
-        if torch.cuda.is_available():
-            bf = bf.cuda()
-            ba = ba.cuda()
-            bd = bd.cuda()
-            shuf_fts = shuf_fts.cuda()
+        # if torch.cuda.is_available():
+        #     bf = bf.cuda()
+        #     ba = ba.cuda()
+        #     bd = bd.cuda()
+        #     shuf_fts = shuf_fts.cuda()
 
         model.train()
         optimiser.zero_grad()
@@ -288,7 +296,12 @@ def train(dataset, verbose=False):
             loss = b_xent(logits, lbl)
         elif config["sup"] == "sup": 
             contrast_features = torch.cat([n_0.unsqueeze(1), n_1.unsqueeze(1)], dim=1)
-            loss = supcon(contrast_features, contrast_labels)
+            contrast_labels_batch = torch.LongTensor(batch_relabeling(contrast_labels_batch))
+            sup_loss = supcon(contrast_features, contrast_labels_batch)
+            unsup_loss = b_xent(logits, lbl)
+            lmd = 0.1
+            loss = loss = lmd * unsup_loss + (1 - lmd) * sup_loss
+
         loss.backward()
         optimiser.step()
 
@@ -297,10 +310,11 @@ def train(dataset, verbose=False):
 
         # validation
         if epoch % 10:
-            final_mean, final_std = fs_test(model, features, adj, diff, labels, test_num, id_by_class, dev_class, n_way, k_shot, m_qry, sparse)
+            final_mean, final_std, final_interval = fs_test(model, features, adj, diff, labels, test_num, id_by_class, dev_class, n_way, k_shot, m_qry, sparse)
             print("===="*20)
             print("novel_dev_acc: " + str(final_mean))
             print("novel_dev_std: " + str(final_std))
+            print("novel_dev_interval: " + str(final_interval))
             if best_acc < final_mean:
                 best_acc = final_mean
                 best_t = epoch
@@ -309,21 +323,22 @@ def train(dataset, verbose=False):
             else:
                 cnt_wait += 1
 
-        if cnt_wait == patience:
-            if verbose:
-                print('Early stopping!')
-            break
+            if cnt_wait == patience:
+                if verbose:
+                    print('Early stopping!')
+                break
 
     if verbose:
         print('Loading {}th epoch'.format(best_t))
 
     # final test
     model.load_state_dict(torch.load('model.pkl'))
-    final_mean, final_std = fs_test(model, features, adj, diff, labels, test_num, id_by_class, test_class, n_way, k_shot, m_qry, sparse)
+    final_mean, final_std, final_interval = fs_test(model, features, adj, diff, labels, test_num, id_by_class, test_class, n_way, k_shot, m_qry, sparse)
     print("****"*20)
     print("novel_test_acc: " + str(final_mean))
     print("novel_test_std: " + str(final_std))
-    return final_mean, final_std
+    print("novel_test_interval: " + str(final_interval))
+    return final_mean, final_std, final_interval
 
 
 if __name__ == '__main__':
@@ -335,13 +350,15 @@ if __name__ == '__main__':
     seed = config['seed']
     random.seed(seed)
     torch.manual_seed(seed)
-    # dataset = 'cora'
     acc_mean = []
     acc_std = []
+    acc_interval = []
     for __ in range(5):
-        m, s = train(dataset)
+        m, s, iterval = train(dataset)
         acc_mean.append(m)
         acc_std.append(s)
-    print("Final acc mean: " + str(np.mean(acc_mean)))
+        acc_interval.append(iterval)
+    print("Final acc: " + str(np.mean(acc_mean)))
     print("Final acc std: " + str(np.mean(acc_std)))
+    print("Final acc interval: " + str(np.mean(acc_interval)))
 
