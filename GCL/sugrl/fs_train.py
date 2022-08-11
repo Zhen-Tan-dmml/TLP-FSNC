@@ -26,6 +26,7 @@ from evaluate import mask_test_edges
 from evaluate import clustering_metrics
 from config import *
 from sklearn.linear_model import LogisticRegression
+from loss import *
 
 def get_args_key(args):
     return "-".join([args.model_name, args.dataset_name, args.custom_key])
@@ -48,7 +49,7 @@ def get_args(model_name, dataset_class, dataset_name, custom_key="", yaml_path=N
     parser.add_argument("--dataset-class", default=dataset_class)
     parser.add_argument("--dataset-name", default=dataset_name)
     # Pretrain
-    parser.add_argument("--pretrain", default=True, type=bool)
+    parser.add_argument("--pretrain", default=False, type=bool)
     # Training
     parser.add_argument('--lr', '--learning-rate', default=0.0025, type=float,
                         metavar='LR', help='initial learning rate', dest='lr')
@@ -205,8 +206,9 @@ def fs_test(z, y, test_num, id_by_class, test_class, n_way, k_shot, m_qry):
 
     final_mean = np.mean(test_acc_all)
     final_std = np.std(test_acc_all)
+    final_interval = 1.96 * (final_std / np.sqrt(len(test_acc_all)))
 
-    return final_mean, final_std
+    return final_mean, final_std, final_interval
 
 
 def run_SUGRL(args, gpu_id=None, **kwargs):
@@ -300,32 +302,66 @@ def run_SUGRL(args, gpu_id=None, **kwargs):
             idx_list.append(idx_0)
 
         h_a, h_p = model(feature_X, A_I_nomal)
-
         h_p_1 = (h_a[idx_p_list[epoch % 100]] + h_a[idx_p_list[(epoch + 2) % 100]] + h_a[
-            idx_p_list[(epoch + 4) % 100]] + h_a[idx_p_list[(epoch + 6) % 100]] + h_a[
-                     idx_p_list[(epoch + 8) % 100]]) / 5
-        s_p = F.pairwise_distance(h_a, h_p)
-        s_p_1 = F.pairwise_distance(h_a, h_p_1)
-        s_n_list = []
-        for h_n in idx_list:
-            s_n = F.pairwise_distance(h_a, h_a[h_n])
-            s_n_list.append(s_n)
-        margin_label = -1 * torch.ones_like(s_p)
+                idx_p_list[(epoch + 4) % 100]] + h_a[idx_p_list[(epoch + 6) % 100]] + h_a[
+                        idx_p_list[(epoch + 8) % 100]]) / 5
+        
+        if config['sup'] == 'sup':
+            contrast_features = torch.cat([F.normalize(h_p_1.unsqueeze(1)), F.normalize(h_p.unsqueeze(1))], dim=1)
+            contrast_labels = torch.LongTensor(relabeling(lable, train_class, dev_class, test_class, id_by_class))
+            contrast_labels = contrast_labels.cuda()
+            supcon = SupConLoss()
+            sup_loss = supcon(contrast_features, contrast_labels)
+            
+            s_p = F.pairwise_distance(h_a, h_p)
+            s_p_1 = F.pairwise_distance(h_a, h_p_1)
+            s_n_list = []
+            for h_n in idx_list:
+                s_n = F.pairwise_distance(h_a, h_a[h_n])
+                s_n_list.append(s_n)
+            margin_label = -1 * torch.ones_like(s_p)
 
-        loss_mar = 0
-        loss_mar_1 = 0
-        mask_margin_N = 0
-        for s_n in s_n_list:
-            loss_mar += (margin_loss(s_p, s_n, margin_label)).mean()
-            loss_mar_1 += (margin_loss(s_p_1, s_n, margin_label)).mean()
-            mask_margin_N += torch.max((s_n - s_p.detach() - my_margin_2), lbl_z).sum()
-        mask_margin_N = mask_margin_N / num_neg
+            loss_mar = 0
+            loss_mar_1 = 0
+            mask_margin_N = 0
+            for s_n in s_n_list:
+                loss_mar += (margin_loss(s_p, s_n, margin_label)).mean()
+                loss_mar_1 += (margin_loss(s_p_1, s_n, margin_label)).mean()
+                mask_margin_N += torch.max((s_n - s_p.detach() - my_margin_2), lbl_z).sum()
+            mask_margin_N = mask_margin_N / num_neg
+            unsup_loss = loss_mar * args.w_loss1 + loss_mar_1 * args.w_loss2 + mask_margin_N * args.w_loss3
+            
+            lmd = 0.1
+            loss = lmd * unsup_loss + (1 - lmd) * sup_loss
 
-        loss = loss_mar * args.w_loss1 + loss_mar_1 * args.w_loss2 + mask_margin_N * args.w_loss3
+
+        elif config['sup'] == 'unsup':
+            s_p = F.pairwise_distance(h_a, h_p)
+            s_p_1 = F.pairwise_distance(h_a, h_p_1)
+            s_n_list = []
+            for h_n in idx_list:
+                s_n = F.pairwise_distance(h_a, h_a[h_n])
+                s_n_list.append(s_n)
+            margin_label = -1 * torch.ones_like(s_p)
+
+            loss_mar = 0
+            loss_mar_1 = 0
+            mask_margin_N = 0
+            for s_n in s_n_list:
+                loss_mar += (margin_loss(s_p, s_n, margin_label)).mean()
+                loss_mar_1 += (margin_loss(s_p_1, s_n, margin_label)).mean()
+                mask_margin_N += torch.max((s_n - s_p.detach() - my_margin_2), lbl_z).sum()
+            mask_margin_N = mask_margin_N / num_neg
+
+            loss = loss_mar * args.w_loss1 + loss_mar_1 * args.w_loss2 + mask_margin_N * args.w_loss3
         loss.backward()
         optimiser.step()
-        string_1 = " loss_1: {:.3f}||loss_2: {:.3f}||loss_3: {:.3f}||".format(loss_mar.item(), loss_mar_1.item(),
-                                                                              mask_margin_N.item())
+        if config['sup'] == 'unsup':
+            string_1 = " loss_1: {:.3f}||loss_2: {:.3f}||loss_3: {:.3f}||".format(loss_mar.item(), loss_mar_1.item(),
+                                                                                mask_margin_N.item())
+        elif config['sup'] == 'sup':
+            string_1 = " loss:||".format(loss.item())
+         
         if args.pretrain:
             if os.path.exists(args.checkpoint_dir + '/' + args.dataset_name + '_weights.pth'):
                     load_params = torch.load(args.checkpoint_dir + '/' + args.dataset_name + '_weights.pth', map_location='cuda')
@@ -341,10 +377,11 @@ def run_SUGRL(args, gpu_id=None, **kwargs):
             h_a, h_p = model.embed(feature_X, A_I_nomal)
             embs = h_p
             embs = embs / embs.norm(dim=1)[:, None]
-            final_mean, final_std = fs_test(embs, lable, test_num, id_by_class, dev_class, n_way, k_shot, m_qry)
+            final_mean, final_std, final_interval = fs_test(embs, lable, test_num, id_by_class, dev_class, n_way, k_shot, m_qry)
             print("===="*20)
             print("novel_dev_acc: " + str(final_mean))
             print("novel_dev_std: " + str(final_std))
+            print("novel_dev_interval: " + str(final_interval))
             if best_acc < final_mean:
                 best_acc = final_mean
                 cnt_wait = 0
@@ -358,11 +395,11 @@ def run_SUGRL(args, gpu_id=None, **kwargs):
 
     print("=== Final Test ===")
     model.load_state_dict(torch.load('model.pkl'))
-    final_mean, final_std = fs_test(embs, lable, test_num, id_by_class, test_class, n_way, k_shot, m_qry)
+    final_mean, final_std, final_interval = fs_test(embs, lable, test_num, id_by_class, test_class, n_way, k_shot, m_qry)
     print("novel_test_acc: " + str(final_mean))
     print("novel_test_std: " + str(final_std))
 
-    return final_mean, final_std
+    return final_mean, final_std, final_interval
 
 
 
@@ -411,13 +448,16 @@ if __name__ == '__main__':
 
     acc_mean = []
     acc_std = []
+    acc_interval = []
     for __ in range(5):
-        m, s = run_SUGRL(main_args, gpu_id=alloc_gpu[0])
+        m, s, interval = run_SUGRL(main_args, gpu_id=alloc_gpu[0])
         acc_mean.append(m)
         acc_std.append(s)
+        acc_interval.append(interval)
     cprint("======"*10)
-    cprint("Final acc mean: " + str(np.mean(acc_mean)), "yellow")
+    cprint("Final acc: " + str(np.mean(acc_mean)), "yellow")
     cprint("Final acc std: " + str(np.mean(acc_std)), "yellow")
+    cprint("Final acc interval: " + str(np.mean(acc_interval)), "yellow")
 
 
     
