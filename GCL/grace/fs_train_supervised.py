@@ -222,7 +222,7 @@ def train_eval():
 
     print("=== Final Test ===")
     model.load_state_dict(torch.load('model.pkl'))
-    final_mean, final_std = fs_test(model, data.x, data.edge_index, data.y, setting['test_num'], id_by_class, dev_class, setting['n_way'], setting['k_shot'], setting['m_qry'])
+    final_mean, final_std = fs_test(model, data.x, data.edge_index, data.y, setting['test_num'], id_by_class, test_class, setting['n_way'], setting['k_shot'], setting['m_qry'])
     print("novel_test_acc: " + str(final_mean))
     print("novel_test_std: " + str(final_std))
 
