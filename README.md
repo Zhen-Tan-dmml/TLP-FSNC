@@ -10,7 +10,7 @@ Insufficient number of classes: ***D***. Cora    ***E***. CiteSeer, ***F***. Ama
 ## Methods
 ### Meta-learning 
 [Full Paper List](https://github.com/kaize0409/awesome-few-shot-gnn)
-|Name|Paper|Code
+|Name|Paper|Original Code
 |---|---|---|
 |MAML|[[ICML 2017] Model-agnostic Meta-learning for Fast Adaptation of Deep Networks](http://proceedings.mlr.press/v70/finn17a/finn17a.pdf)|[PyTorch](https://github.com/dragen1860/MAML-Pytorch)
 |ProtoNet|[[NeurIPS 2017] Prototypical Networks for Few-shot Learning](https://proceedings.neurips.cc/paper/2017/file/cb8da6767461f2812ae4290eac7cbc42-Paper.pdf)|[PyTorch](https://github.com/sicara/easy-few-shot-learning)
@@ -22,7 +22,7 @@ Insufficient number of classes: ***D***. Cora    ***E***. CiteSeer, ***F***. Ama
 
 ### Contrastive Learning for TLP
 [Full Paper List](https://github.com/ChandlerBang/awesome-self-supervised-gnn)
-|Name|Paper|Code
+|Name|Paper|Original Code
 |---|---|---|
 |FT-GNN|[[ECCV 2020] Rethinking few-shot image classification: a good embedding is all you need?](https://link.springer.com/chapter/10.1007/978-3-030-58568-6_16)|[PyTorch](https://github.com/WangYueFt/rfs)
 |MVGRL|[[ICML 2020] Contrastive Multi-View Representation Learning on Graphs](https://arxiv.org/pdf/2006.05582.pdf)|[PyTorch](https://github.com/kavehhassani/mvgrl)
