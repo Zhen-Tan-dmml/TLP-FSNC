@@ -8,7 +8,8 @@ Sufficient number of classes: ***A***. CoraFull    ***B***. Coauthor-CS    ***C*
 Insufficient number of classes: ***D***. Cora    ***E***. CiteSeer, ***F***. Amazon-Computer
 
 ## Methods
-### Meta-learning
+### Meta-learning 
+[Full Paper List](https://github.com/kaize0409/awesome-few-shot-gnn)
 |Name|Paper|Code
 |---|---|---|
 |MAML|[[ICML 2017] Model-agnostic Meta-learning for Fast Adaptation of Deep Networks](http://proceedings.mlr.press/v70/finn17a/finn17a.pdf)|[PyTorch](https://github.com/dragen1860/MAML-Pytorch)
@@ -18,8 +19,9 @@ Insufficient number of classes: ***D***. Cora    ***E***. CiteSeer, ***F***. Ama
 |AMM-GNN|[[CIKM 2020] Graph Few-shot Learning with Attribute Matching](http://www.public.asu.edu/~kding9/pdf/CIKM2020_AMM.pdf)|[N/A]
 |G-Meta|[[NeurIPS 2020] Graph Meta Learning via Local Subgraphs](https://arxiv.org/pdf/2006.07889.pdf)|[PyTorch](https://github.com/mims-harvard/G-Meta)
 |TENT|[[SIGKDD 2022] Task-Adaptive Few-shot Node Classification](https://arxiv.org/pdf/2206.11972.pdf)|[PyTorch](https://github.com/SongW-SW/TENT)
-### Contrastive Learning for TLP
 
+### Contrastive Learning for TLP
+[Full Paper List](https://github.com/ChandlerBang/awesome-self-supervised-gnn)
 |Name|Paper|Code
 |---|---|---|
 |FT-GNN|[[ECCV 2020] Rethinking few-shot image classification: a good embedding is all you need?](https://link.springer.com/chapter/10.1007/978-3-030-58568-6_16)|[PyTorch](https://github.com/WangYueFt/rfs)
