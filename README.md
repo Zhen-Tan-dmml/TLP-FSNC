@@ -32,6 +32,11 @@ Insufficient number of classes: ***D***. Cora    ***E***. CiteSeer, ***F***. Ama
 |BGRL|[[ICLR 2022] LARGE-SCALE REPRESENTATION LEARNING ON GRAPHS VIA BOOTSTRAPPING](https://arxiv.org/pdf/2102.06514.pdf)|[PyTorch](https://github.com/Namkyeong/BGRL_Pytorch)
 |SUGRL|[[AAAI 2022] Simple Unsupervised Graph Representation Learning](https://openreview.net/pdf?id=rFbR4Fv-D6-)|[PyTorch](https://github.com/YujieMo/SUGRL)
 
+### Running Time on Cora
+|  Methods | MAML | ProtoNet | Meta-GNN | GPN | AMM-GNN | G-Meta | TENT | MVGRL | GraphCL | Grace |  MERIT | SUGRL |
+|:--------:|:----:|:--------:|:--------:|:---:|:-------:|:------:|:----:|:-----:|:-------:|:-----:|:------:|:-----:|
+| Time (s) |      |          |          |     |         |        |      | 90.40 |  55.57  | 11.62 | 869.56 |  7.17 |
+
 
 
 
