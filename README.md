@@ -35,7 +35,7 @@ Insufficient number of classes: ***D***. Cora    ***E***. CiteSeer, ***F***. Ama
 ### Running Time on Cora
 |  Methods | MAML | ProtoNet | Meta-GNN | GPN | AMM-GNN | G-Meta | TENT | MVGRL | GraphCL | Grace |  MERIT | SUGRL |
 |:--------:|:----:|:--------:|:--------:|:---:|:-------:|:------:|:----:|:-----:|:-------:|:-----:|:------:|:-----:|
-| Time (s) |      |          |          |     |         |        | 176.83     | 90.40 |  55.57  | 11.62 | 869.56 |  7.17 |
+| Time (s) | 9.89     |     2.99     |      28.30    |  4.79   |    42.45     |    50.78    | 35.37     | 90.40 |  55.57  | 11.62 | 869.56 |  7.17 |
 
 
 
