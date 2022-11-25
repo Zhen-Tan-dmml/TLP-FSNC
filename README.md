@@ -1,4 +1,4 @@
-# Transductive Linear Probing: A Novel Framework for Few-Shot Node Classification
+# Transductive Linear Probing: A Novel Framework for Few-Shot Node Classification [LoG 2022]
 
 ## Dataset 
 [[Pytorch Link]](https://pytorch-geometric.readthedocs.io/en/latest/modules/datasets.html)
