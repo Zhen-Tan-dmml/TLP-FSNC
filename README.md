@@ -1,4 +1,4 @@
-# Transductive Linear Probing: A Novel Framework for Few-Shot Node Classification [LoG 2022]
+# Transductive Linear Probing: A Novel Framework for Few-Shot Node Classification [LoG 2022] [[Paper]](https://openreview.net/forum?id=dK8vOIBENa3)
 
 ## Dataset 
 [[Pytorch Link]](https://pytorch-geometric.readthedocs.io/en/latest/modules/datasets.html)
@@ -38,6 +38,14 @@ Insufficient number of classes: ***D***. Cora    ***E***. CiteSeer, ***F***. Ama
 | Time (s) | 9.89     |     2.99     |      28.30    |  4.79   |    42.45     |    50.78    | 35.37     | 90.40 |  55.57  | 11.62 | 869.56 |  7.17 |
 
 
+## Citation
+```
+@inproceedings{tantransductive,
+  title={Transductive Linear Probing: A Novel Framework for Few-Shot Node Classification},
+  author={Tan, Zhen and Wang, Song and Ding, Kaize and Li, Jundong and Liu, Huan},
+  booktitle={Learning on Graphs Conference}
+}
+```
 
 
 
