@@ -73,7 +73,7 @@ class GraphConvolution_dense(nn.Module):
                 self.register_parameter('bias', None)
             self.reset_parameters()
 
-    def reset_parameters(self):。
+    def reset_parameters(self):
         stdv = 1. / math.sqrt(self.weight.size(1))
         self.weight.data.uniform_(-stdv, stdv)
         if self.bias is not None:
