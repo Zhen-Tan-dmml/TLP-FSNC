@@ -408,12 +408,6 @@ names = ["CoraFull",'ogbn-arxiv',"Coauthor-CS","Amazon-Computer","Cora","CiteSee
 #for dataset in ['dblp','Amazon_clothing','Amazon_eletronics']:
 for dataset in names:
     adj, features, labels, degrees, class_list_train, class_list_valid, class_list_test, id_by_class = load_data(dataset)
-    print('&'.join([str(adj.shape[0]),str(int(degrees.sum().detach().item()//2) if dataset!='ogbn-arxiv' else int(degrees.sum().detach().item()//1)),str(features.shape[-1]), '/'.join([str(len(class_list_train)),str(len(class_list_valid)),str(len(class_list_test))])])+'\\\\\hline')
-    continue
-
-    #dataset = args.dataset
-
-
 
     for n_way in [2,5]:
         if n_way==5 and dataset in ["Amazon-Computer","Cora","CiteSeer"]:continue
